@@ -1,7 +1,7 @@
 
 
 def activity(name, &b)
-  
+  Activity.new(&b)
 end
 
 class Activity

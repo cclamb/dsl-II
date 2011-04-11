@@ -1,4 +1,4 @@
-require_relative '../lib/insomnia/activity'
+require_relative '../../lib/insomnia/activity'
 
 describe 'create activity' do
 
@@ -40,7 +40,30 @@ describe 'call activity' do
 end
 
 describe 'keyword' do
-  it 'should be creatable with a block'
-  it 'should be creatable withough a block'
-  it 'should always require a name'
+
+  it 'should always require a name' do
+    a1 = activity(:a1) { true }
+    a2 = activity :a2 do
+      true
+    end
+    a1.should_not == nil
+    a2.should_not == nil
+  end
+
+  it 'should be creatable with a block' do
+    a1 = activity(:a1) { true }
+    a2 = activity :a2 do
+      true
+    end
+    a1.should_not == nil
+    a2.should_not == nil   
+  end
+
+  it 'should be creatable without a block'do
+    a1 = activity(:a1)
+    a2 = activity :a2
+    a1.should_not == nil
+    a2.should_not == nil   
+  end
+  
 end
