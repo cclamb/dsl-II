@@ -59,7 +59,7 @@ describe 'keyword' do
     a2.should_not == nil   
   end
 
-  it 'should be creatable without a block'do
+  it 'should be creatable without a block' do
     a1 = activity(:a1)
     a2 = activity :a2
     a1.should_not == nil
