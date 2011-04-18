@@ -1,7 +1,3 @@
-def restrict(&b)
-  Restrict.new(&b)
-end
-
 class Restrict
 
   def initialize(*activities, &b)

@@ -38,23 +38,3 @@ describe 'call constraint' do
     c1.call.should == true
   end
 end
-
-describe 'keyword' do
-
-  it 'should be creatable with a block' do
-    c1 = constraint { true }
-    c2 = constraint do
-      true
-    end
-    c1.should_not == nil
-    c2.should_not == nil   
-  end
-
-  it 'should be creatable without a block' do
-    c1 = constraint
-    c2 = constraint
-    c1.should_not == nil
-    c2.should_not == nil   
-  end
-  
-end

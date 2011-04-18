@@ -38,32 +38,3 @@ describe 'call activity' do
     a1.call.should == true
   end
 end
-
-describe 'keyword' do
-
-  it 'should always require a name' do
-    a1 = activity(:a1) { true }
-    a2 = activity :a2 do
-      true
-    end
-    a1.should_not == nil
-    a2.should_not == nil
-  end
-
-  it 'should be creatable with a block' do
-    a1 = activity(:a1) { true }
-    a2 = activity :a2 do
-      true
-    end
-    a1.should_not == nil
-    a2.should_not == nil   
-  end
-
-  it 'should be creatable without a block' do
-    a1 = activity(:a1)
-    a2 = activity :a2
-    a1.should_not == nil
-    a2.should_not == nil   
-  end
-  
-end

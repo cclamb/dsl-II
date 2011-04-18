@@ -18,7 +18,7 @@ describe 'create restrict' do
   end
 
   it 'should handle with statement' do
-    c1, c2 = constraint, constraint
+    c1, c2 = Constraint.new, Constraint.new
     ra1 = Restrict.new do
       with c1, c2
     end
@@ -52,35 +52,4 @@ describe 'call restrict' do
 
   it 'should support calls with activities that have been restricted'
 
-end
-
-describe 'keyword' do
-
-  it 'should be creatable with a block' do
-    ra1 = restrict { true }
-    ra2 = restrict do
-      true
-    end
-    ra1.should_not == nil
-    ra2.should_not == nil   
-  end
-
-  it 'should be creatable without a block' do
-    ra1 = restrict
-    ra2 = restrict
-    ra1.should_not == nil
-    ra2.should_not == nil   
-  end
-
-  it 'should handle with statements' do
-    c1, c2 = constraint, constraint
-    ra1 = restrict do
-      with c1, c2
-    end
-  end
-
-  it 'should handle an activity to restrict'
-
-  it 'should handle multiple activites to restrict'
-  
 end
