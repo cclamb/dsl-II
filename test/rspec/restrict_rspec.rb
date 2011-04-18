@@ -1,5 +1,6 @@
 require_relative '../../lib/insomnia/restrict'
 require_relative '../../lib/insomnia/constraint'
+require_relative '../../lib/insomnia/activity'
 
 describe 'create restrict' do
 
@@ -24,9 +25,23 @@ describe 'create restrict' do
     end
   end
 
-  it 'should handle an activity to restrict'
+  it 'should handle an activity to restrict' do
+    a1 = Activity.new
+    c1, c2 = Constraint.new, Constraint.new
+    ra = Restrict.new a1 do
+      with c1, c2
+    end
+    ra.should_not == nil
+  end
 
-  it 'should handle multiple activites to restrict'
+  it 'should handle multiple activites to restrict' do
+    a1, a2, a3 = Activity.new, Activity.new, Activity.new
+    c1, c2 = Constraint.new, Constraint.new
+    ra = Restrict.new a1, a2, a3 do
+      with c1, c2
+    end
+    ra.should_not == nil
+  end
 
 end
 
@@ -50,6 +65,14 @@ describe 'call restrict' do
     ra1.call
   end
 
-  it 'should support calls with activities that have been restricted'
+  it 'should support calls with activities that have been restricted' do
+    a1, a2, a3 = Activity.new, Activity.new, Activity.new
+    c1, c2 = Constraint.new, Constraint.new
+    ra = Restrict.new a1, a2, a3 do
+      with c1, c2
+    end
+    ra.should_not == nil
+    ra.call
+  end
 
 end

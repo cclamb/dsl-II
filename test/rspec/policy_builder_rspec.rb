@@ -90,9 +90,27 @@ describe 'restrict keyword' do
     end
   end
 
-  it 'should handle an activity to restrict'
+  it 'should handle an activity to restrict' do
+    builder = PolicyBuilder.new do
+      a1 = activity :a1
+      c1, c2 = constraint, constraint
+      ra = restrict a1 do
+        with c1, c2
+      end
+      ra.should_not == nil
+    end
+  end
 
-  it 'should handle multiple activites to restrict'
+  it 'should handle multiple activites to restrict' do
+    builder = PolicyBuilder.new do
+      a1, a2, a3 = activity(:a1), activity(:a2), activity(:a3)
+      c1, c2 = constraint, constraint
+      ra = restrict a1, a2, a3 do
+        with c1, c2
+      end
+      ra.should_not == nil
+    end
+  end
   
 end
 

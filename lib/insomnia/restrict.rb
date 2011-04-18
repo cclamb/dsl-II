@@ -1,6 +1,9 @@
 class Restrict
 
+  attr_accessor :activities
+
   def initialize(*activities, &b)
+    @activities = activities
     instance_exec(&b) if block_given?
   end
 

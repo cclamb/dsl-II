@@ -16,8 +16,8 @@ class PolicyBuilder
     Constraint.new(&b)
   end
 
-  def restrict(&b)
-    Restrict.new(&b)
+  def restrict(*activities, &b)
+    Restrict.new(activities, &b)
   end
 
 end
