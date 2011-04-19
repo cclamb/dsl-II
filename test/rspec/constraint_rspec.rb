@@ -37,4 +37,30 @@ describe 'call constraint' do
     c1.should_not == nil
     c1.call.should == true
   end
+
+  it 'should handle optional context' do
+    c1 = Constraint.new do |context| 
+      context.should_not == nil
+      true
+    end
+    c2 = Constraint.new { |context| true }
+    c1.should_not == nil
+    c1.call(:context => 'context').should == true
+    c2.should_not == nil
+    c2.call(:context => 'context').should == true
+  end
+
+  it 'should handle optional context and artifact' do
+    c1 = Constraint.new do |context, artifact| 
+      context.should_not == nil
+      artifact.should_not == nil
+      true
+    end
+    c2 = Constraint.new { |context, artfact| true }
+    c1.should_not == nil
+    c1.call(:context => 'context', :artifact => 'artifact').should == true
+    c2.should_not == nil
+    c2.call(:context => 'context', :artifact => 'artifact').should == true
+  end
+
 end

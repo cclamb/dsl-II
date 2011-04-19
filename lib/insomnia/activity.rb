@@ -1,3 +1,13 @@
-require_relative 'deferred_executor'
+class Activity
 
-class Activity < DeferredExecutor; end
+  attr_accessor :block
+
+  def initialize(&b)
+    @block = b
+  end
+
+  def call
+    @block != nil ? block.call : true
+  end
+
+end
