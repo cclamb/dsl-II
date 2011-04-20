@@ -4,12 +4,15 @@ require_relative 'restrict'
 
 class PolicyBuilder
 
+  attr_accessor :activities
+
   def initialize(&block)
+    @activities = {}
     instance_exec(&block)
   end
 
   def activity(name, &b)
-    Activity.new(&b)
+    @activities[name] = Activity.new(&b)
   end
 
   def constraint(&b)

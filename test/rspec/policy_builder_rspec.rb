@@ -114,4 +114,30 @@ describe 'restrict keyword' do
   
 end
 
+describe 'tuple keyword' do
+  it 'should allow for tuple creation inside policy files'
+end
+
+describe 'script context' do
+
+  context 'with an active policy script' do
+    it 'should return a script context after processing'
+  end
+
+  context 'without an active policy script' do
+    it 'should handle context requests with an empty context'
+  end
+end
+
+describe 'script evaluation' do
+  context 'with a correct policy script' do
+    it 'should create a simple policy context based on the script' do
+      builder = PolicyBuilder.new do
+        instance_eval(File.read('policies/simple.pol'))
+      end
+      builder.activities[:a1].should_not == nil
+    end
+  end
+end
+
 
