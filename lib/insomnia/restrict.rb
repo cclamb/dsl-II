@@ -1,14 +1,15 @@
 class Restrict
 
-  attr_accessor :activities
+  attr_accessor :activities, :constraints
 
   def initialize(*activities, &b)
     @activities = activities
+    @constraints = []
     instance_exec(&b) if block_given?
   end
 
   def with(*args)
-    @constraints = @constraints == nil ? args : @constraints + args
+    @constraints.push(args)
   end
 
   def call(context = nil, artifact = nil)

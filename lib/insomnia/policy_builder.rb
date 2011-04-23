@@ -7,11 +7,14 @@ class PolicyBuilder
 
   def initialize(&block)
     @activities = {}
+    @restrictions = []
     instance_exec(&block)
   end
 
   def activity(name, &b)
-    @activities[name] = Activity.new(&b)
+    activity = Activity.new(&b)
+    @activities[name] = activity
+    activity
   end
 
   def constraint(&b)
@@ -19,7 +22,9 @@ class PolicyBuilder
   end
 
   def restrict(*activities, &b)
-    Restrict.new(activities, &b)
+    restriction = Restrict.new(activities, &b)
+    @restrictions.push(restriction)
+    restriction
   end
 
   def context
