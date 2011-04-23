@@ -135,7 +135,8 @@ describe 'script evaluation' do
       builder = PolicyBuilder.new do
         instance_eval(File.read('policies/simple.pol'))
       end
-      builder.activities[:a1].should_not == nil
+      ctx = builder.context
+      ctx.activities[:a1].should_not == nil
     end
   end
 end

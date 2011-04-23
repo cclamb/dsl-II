@@ -1,10 +1,9 @@
 require_relative 'activity'
 require_relative 'constraint'
 require_relative 'restrict'
+require_relative 'policy_context'
 
 class PolicyBuilder
-
-  attr_accessor :activities
 
   def initialize(&block)
     @activities = {}
@@ -21,6 +20,10 @@ class PolicyBuilder
 
   def restrict(*activities, &b)
     Restrict.new(activities, &b)
+  end
+
+  def context
+    PolicyContext.new(@activities)
   end
 
 end
