@@ -1,8 +1,9 @@
 class Activity
 
-  attr_accessor :block
+  attr_accessor :name, :block
 
-  def initialize(&b)
+  def initialize(name = nil, &b)
+    @name = name
     @block = b
   end
 

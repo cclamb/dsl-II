@@ -12,7 +12,7 @@ class PolicyBuilder
   end
 
   def activity(name, &b)
-    activity = Activity.new(&b)
+    activity = Activity.new(name, &b)
     @activities[name] = activity
     activity
   end
@@ -28,7 +28,7 @@ class PolicyBuilder
   end
 
   def context
-    PolicyContext.new(@activities)
+    PolicyContext.new(@activities, @restrictions)
   end
 
 end

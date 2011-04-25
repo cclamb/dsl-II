@@ -9,7 +9,9 @@ describe 'activity keyword' do
         true
       end
       a1.should_not == nil
+      a1.name.should == :a1
       a2.should_not == nil
+      a2.name.should == :a2
     end
   end
 
@@ -107,6 +109,9 @@ describe 'restrict keyword' do
         with c1, c2
       end
       ra.should_not == nil
+      ra.activities.size.should == 1
+      ra.activities[0].should == a1
+      ra.activities[0].name.should == :a1
     end
   end
 
@@ -158,6 +163,46 @@ describe 'script evaluation' do
       ctx = builder.context
     end
   end
+
+  context 'with a correct policy script' do
+    it 'should handle restrictions' do
+      builder = PolicyBuilder.new do
+        instance_eval(File.read('policies/simple-restrict.pol'))
+      end
+      ctx = builder.context
+      restrictions = ctx.restrictions
+      restrictions.size.should == 4
+      ra = restrictions[0]
+      ra.activities.size.should == 1
+      ra.activities[0].name.should == :play
+      ra.constraints.size.should == 1
+      ra.constraints[0].call().should == true
+
+      ra = restrictions[1]
+      ra.activities.size.should == 1
+      ra.activities[0].name.should == :record
+      ra.constraints.size.should == 2
+      ra.constraints[0].call({:context => ''}).should == true
+      ra.constraints[0].call({:artifact => '', :context => ''}).should == true
+
+      ra = restrictions[2]
+      ra.activities.size.should == 1
+      ra.activities[0].name.should == :stop
+      ra.constraints.size.should == 2
+      ra.constraints[0].call().should == true
+      ra.constraints[0].call({:artifact => '', :context => ''}).should == true
+
+      ra = restrictions[3]
+      ra.activities.size.should == 2
+      ra.activities[0].name.should == :play
+      ra.activities[1].name.should == :stop
+      ra.constraints.size.should == 3
+      ra.constraints[0].call().should == true
+      ra.constraints[0].call({:context => ''}).should == true
+      ra.constraints[0].call({:artifact => '', :context => ''}).should == true
+    end
+  end
+
 end
 
 

@@ -32,15 +32,21 @@ describe 'create restrict' do
       with c1, c2
     end
     ra.should_not == nil
+    ra.activities.size.should == 1 
+    ra.activities[0].should == a1
   end
 
   it 'should handle multiple activites to restrict' do
-    a1, a2, a3 = Activity.new, Activity.new, Activity.new
+    a1, a2, a3 = Activity.new(:foo), Activity.new, Activity.new(:bar)
     c1, c2 = Constraint.new, Constraint.new
     ra = Restrict.new a1, a2, a3 do
       with c1, c2
     end
     ra.should_not == nil
+    ra.activities.size.should == 3
+    ra.activities[0].name.should == :foo
+    ra.activities[1].name.should == nil
+    ra.activities[2].name.should == :bar
   end
 
 end
