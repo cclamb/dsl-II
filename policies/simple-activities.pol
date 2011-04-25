@@ -1,0 +1,5 @@
+a1 = activity :foo
+a2 = activity(:bar) { true }
+a3 = activity :blech do
+  true
+end

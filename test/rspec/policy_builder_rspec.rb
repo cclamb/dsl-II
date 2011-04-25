@@ -132,20 +132,10 @@ describe 'tuple keyword' do
   it 'should allow for tuple creation inside policy files'
 end
 
-describe 'script context' do
-
-  context 'with an active policy script' do
-    it 'should return a script context after processing'
-  end
-
-  context 'without an active policy script' do
-    it 'should handle context requests with an empty context'
-  end
-end
-
 describe 'script evaluation' do
 
   context 'with a correct policy script' do
+
     it 'should create a simple policy context based on the script' do
       builder = PolicyBuilder.new do
         instance_eval(File.read('policies/simple.pol'))
@@ -153,18 +143,28 @@ describe 'script evaluation' do
       ctx = builder.context
       ctx.activities[:a1].should_not == nil
     end
-  end
 
-  context 'with a correct policy script' do
+    it 'should handle activities' do
+      builder = PolicyBuilder.new do
+        instance_eval(File.read('policies/simple-activities.pol'))
+      end
+      ctx = builder.context
+      ctx.activities.size == 3
+      ctx.activities[:foo].name.should == :foo
+      ctx.activities[:foo].call().should == true
+      ctx.activities[:bar].name.should == :bar
+      ctx.activities[:bar].call().should == true
+      ctx.activities[:blech].name.should == :blech
+      ctx.activities[:blech].call().should == true
+    end
+
     it 'should handle constraints' do
       builder = PolicyBuilder.new do
         instance_eval(File.read('policies/simple-constraint.pol'))
       end
       ctx = builder.context
     end
-  end
 
-  context 'with a correct policy script' do
     it 'should handle restrictions' do
       builder = PolicyBuilder.new do
         instance_eval(File.read('policies/simple-restrict.pol'))
@@ -201,6 +201,7 @@ describe 'script evaluation' do
       ra.constraints[0].call({:context => ''}).should == true
       ra.constraints[0].call({:artifact => '', :context => ''}).should == true
     end
+
   end
 
 end
