@@ -1,0 +1,13 @@
+c = constraint
+
+c1 = constraint { true }
+
+c2 = constraint do 
+  true
+end
+
+c3 = constraint { |x| true }
+
+c4 = constraint { |x,y| true }
+
+

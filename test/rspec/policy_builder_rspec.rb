@@ -56,6 +56,15 @@ describe 'constraint keyword' do
       c2.should_not == nil   
     end
   end
+
+  it 'should be creatable with optional args' do
+    builder = PolicyBuilder.new do
+      c1 = constraint { |c| true }
+      c2 = constraint { |c, a| true }
+      c1.should_not == nil
+      c2.should_not == nil
+    end
+  end
   
 end
 
@@ -130,6 +139,7 @@ describe 'script context' do
 end
 
 describe 'script evaluation' do
+
   context 'with a correct policy script' do
     it 'should create a simple policy context based on the script' do
       builder = PolicyBuilder.new do
@@ -137,6 +147,15 @@ describe 'script evaluation' do
       end
       ctx = builder.context
       ctx.activities[:a1].should_not == nil
+    end
+  end
+
+  context 'with a correct policy script' do
+    it 'should handle constraints' do
+      builder = PolicyBuilder.new do
+        instance_eval(File.read('policies/simple-constraint.pol'))
+      end
+      ctx = builder.context
     end
   end
 end
