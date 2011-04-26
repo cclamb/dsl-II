@@ -1,5 +1,6 @@
 require_relative '../../lib/insomnia/restrict'
 require_relative '../../lib/insomnia/policy'
+require_relative '../../lib/insomnia/obligation'
 
 describe Policy do
 

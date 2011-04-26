@@ -1,3 +1,5 @@
+require_relative 'obligation'
+
 class Policy
 
   attr_accessor :restricted_activities, :obligators
