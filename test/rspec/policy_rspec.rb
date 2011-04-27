@@ -39,7 +39,7 @@ describe Policy do
       p.obligations[1].obligators[0].should == ra4
     end
     
-    it 'should handle one-to-one obligations' do
+    it 'should handle one-to-many obligations' do
       ra1, ra2, ra3 = Restrict.new, Restrict.new, Restrict.new
       p = Policy.new do
         obligate ra1, :with => [ra2, ra3]
@@ -50,7 +50,25 @@ describe Policy do
       p.obligations[0].obligators[1].should == ra3
     end
     
-    it 'should handle one-to-many obligations'
+    it 'should handle many-to-one obligations' do
+      ra1, ra2, ra3 = Restrict.new, Restrict.new, Restrict.new
+      p = Policy.new do
+        obligate ra1, ra2, :with => ra3
+      end
+      p.obligations.size.should == 1
+      p.obligations[0].obligatees[0].should == ra1
+      p.obligations[0].obligatees[1].should == ra2
+      p.obligations[0].obligators[0].should == ra3
+    end
+    
+    it 'should handle many-to-many obligations' do
+      ra1, ra2, ra3, ra4 = Restrict.new, Restrict.new, Restrict.new, Restrict.new
+      p = Policy.new do
+        obligate ra1, :with => ra2
+        obligate ra2, ra3, :with => ra4
+        obligate ra1, :with => [ra4, ra3]
+      end
+    end
   end
 
   context 'with contraint evaluator' do
