@@ -1,0 +1,25 @@
+a1 = activity(:play)    { true }
+a2 = activity(:record)  { true }
+a3 = activity(:stop)    { true }
+
+c1 = constraint { true }
+c2 = constraint { |c| true }
+c3 = constraint { |c, a| true }
+
+ra1 = restrict a1 do
+  with c1
+end
+
+ra2 = restrict a2 do
+  with c2, c3
+end
+
+ra3 = restrict a3 do
+  with c1, c3
+end
+
+ra4 = restrict a1, a3 do
+  with c1, c2, c3
+end
+
+

@@ -1,6 +1,7 @@
 require_relative 'activity'
 require_relative 'constraint'
 require_relative 'restrict'
+require_relative 'policy'
 require_relative 'policy_context'
 
 class PolicyBuilder
@@ -25,6 +26,10 @@ class PolicyBuilder
     restriction = Restrict.new(activities, &b)
     @restrictions.push(restriction)
     restriction
+  end
+
+  def policy(&b)
+    Policy.new(&b)    
   end
 
   def context
