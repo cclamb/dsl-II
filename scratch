@@ -1,3 +1,4 @@
  
-
+decouple policy & constraint eval from the policy and constraint classes
+=> in evaluator implementations
 
