@@ -9,6 +9,7 @@ class PolicyBuilder
   def initialize(&block)
     @activities = {}
     @restrictions = []
+    @policies = []
     instance_exec(&block)
   end
 
@@ -29,11 +30,13 @@ class PolicyBuilder
   end
 
   def policy(&b)
-    Policy.new(&b)    
+    policy = Policy.new(&b)
+    @policies.push(policy)
+    policy    
   end
 
   def context
-    PolicyContext.new(@activities, @restrictions)
+    PolicyContext.new(@activities, @restrictions, @policies)
   end
 
 end

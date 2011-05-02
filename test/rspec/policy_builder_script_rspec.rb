@@ -11,8 +11,12 @@ describe 'script evaluation' do
       ctx = builder.context
       ctx.activities[:a1].should_not == nil
     end
+    
+  end
+  
+  context 'with activites' do
 
-    it 'should handle activities' do
+    it 'should handle simple activities' do
       builder = PolicyBuilder.new do
         instance_eval(File.read('policies/simple-activities.pol'))
       end
@@ -25,15 +29,23 @@ describe 'script evaluation' do
       ctx.activities[:blech].name.should == :blech
       ctx.activities[:blech].call().should == true
     end
+  
+  end
+  
+  context 'with constraints' do
 
-    it 'should handle constraints' do
+    it 'should handle simple constraints' do
       builder = PolicyBuilder.new do
         instance_eval(File.read('policies/simple-constraint.pol'))
       end
       ctx = builder.context
     end
 
-    it 'should handle restrictions' do
+  end
+  
+  context 'with restrictions' do
+
+    it 'should handle simple restrictions' do
       builder = PolicyBuilder.new do
         instance_eval(File.read('policies/simple-restrict.pol'))
       end
@@ -68,6 +80,23 @@ describe 'script evaluation' do
       ra.constraints[0].call().should == true
       ra.constraints[0].call({:context => ''}).should == true
       ra.constraints[0].call({:artifact => '', :context => ''}).should == true
+    end
+    
+  end
+  
+  context 'with policies' do
+    
+    it 'should handle simple policies' do
+      builder = PolicyBuilder.new do
+        instance_eval(File.read('policies/simple-policy.pol'))
+      end
+      ctx = builder.context
+      policies = ctx.policies
+      policies.size.should == 2
+      policies[0].included_activities.size.should == 3
+      policies[1].obligations.size.should == 1
+      policies[1].obligations[0].obligatees.size.should == 1
+      policies[1].obligations[0].obligators.size.should == 2
     end
 
   end

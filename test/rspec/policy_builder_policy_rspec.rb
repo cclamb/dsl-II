@@ -1,6 +1,7 @@
 require_relative '../../lib/insomnia/policy_builder'
 
 describe PolicyBuilder do
+
   it 'should handle empty policies' do
     builder = PolicyBuilder.new do
       a1 = activity(:a1) { true }
