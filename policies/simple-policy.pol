@@ -7,7 +7,7 @@ c2 = constraint { |c| true }
 c3 = constraint { |c, a| true }
 
 ra1 = restrict a1 do
-  with c1
+  with c1q
 end
 
 ra2 = restrict a2 do

@@ -91,6 +91,55 @@ describe Policy do
       p.obligations[2].obligators[1].should == ra3
     end
   end
+  
+  context 'with permit statement' do
+
+    it 'should handle no permissions' do
+      p = Policy.new do
+        permit
+      end    
+      p.included_activities.size.should == 0
+    end
+    
+    
+    it 'should handle onen permission' do
+      ra1 = Restrict.new
+      p = Policy.new do
+        permit ra1
+      end    
+      p.included_activities.size.should == 1
+      p.included_activities[0].should == ra1
+    end
+    
+    it 'should handle many permissions' do
+      ra1, ra2, ra3, ra4 = Restrict.new, Restrict.new, Restrict.new, Restrict.new
+      ra1 = Restrict.new
+      p = Policy.new do
+        permit ra1, ra2, ra3, ra4
+      end    
+      p.included_activities.size.should == 4
+      p.included_activities[0].should == ra1
+      p.included_activities[1].should == ra2
+      p.included_activities[2].should == ra3
+      p.included_activities[3].should == ra4
+    end
+    
+    it 'should handle many permission statments' do
+      ra1, ra2, ra3, ra4 = Restrict.new, Restrict.new, Restrict.new, Restrict.new
+      ra1 = Restrict.new
+      p = Policy.new do
+        permit ra1 
+        permit ra2
+        permit ra3
+        permit ra4
+      end    
+      p.included_activities.size.should == 4
+      p.included_activities[0].should == ra1
+      p.included_activities[1].should == ra2
+      p.included_activities[2].should == ra3
+      p.included_activities[3].should == ra4
+    end
+  end
 
   context 'with contraint evaluator' do
     it 'should handle a default evaluator value'
