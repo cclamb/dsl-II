@@ -52,10 +52,12 @@ describe Policy do
           with ra2, ra3
         end
       end
-      #p.obligations.size.should == 1
-      #p.obligations[0].obligatees[0].should == ra1
-      #p.obligations[0].obligators[0].should == ra2
-      #p.obligations[0].obligators[1].should == ra3
+      ctx = p.context
+      obligations = ctx[:obligations] 
+      obligations.size.should == 1
+      obligations[0].obligatees[0].should == ra1
+      obligations[0].obligators[0].should == ra2
+      obligations[0].obligators[1].should == ra3
     end
     
     it 'should handle many-to-one obligations' do
@@ -65,10 +67,12 @@ describe Policy do
           with ra3
         end
       end
-      #p.obligations.size.should == 1
-      #p.obligations[0].obligatees[0].should == ra1
-      #p.obligations[0].obligatees[1].should == ra2
-      #p.obligations[0].obligators[0].should == ra3
+      ctx = p.context
+      obligations = ctx[:obligations] 
+      obligations.size.should == 1
+      obligations[0].obligatees[0].should == ra1
+      obligations[0].obligatees[1].should == ra2
+      obligations[0].obligators[0].should == ra3
     end
     
     it 'should handle many-to-many obligations' do
@@ -84,15 +88,17 @@ describe Policy do
           with ra4, ra3
         end
       end
-      #p.obligations.size.should == 3
-      #p.obligations[0].obligatees[0].should == ra1
-      #p.obligations[0].obligators[0].should == ra2
-      #p.obligations[1].obligatees[0].should == ra2
-      #p.obligations[1].obligatees[1].should == ra3
-      #p.obligations[1].obligators[0].should == ra4
-      #p.obligations[2].obligatees[0].should == ra1
-      #p.obligations[2].obligators[0].should == ra4
-      #p.obligations[2].obligators[1].should == ra3
+      ctx = p.context
+      obligations = ctx[:obligations] 
+      obligations.size.should == 3
+      obligations[0].obligatees[0].should == ra1
+      obligations[0].obligators[0].should == ra2
+      obligations[1].obligatees[0].should == ra2
+      obligations[1].obligatees[1].should == ra3
+      obligations[1].obligators[0].should == ra4
+      obligations[2].obligatees[0].should == ra1
+      obligations[2].obligators[0].should == ra4
+      obligations[2].obligators[1].should == ra3
     end
   end
   
@@ -101,8 +107,10 @@ describe Policy do
     it 'should handle no permissions' do
       p = Policy.new do
         permit
-      end    
-      #p.included_activities.size.should == 0
+      end
+      ctx = p.context
+      included_activities = ctx[:included_activities]   
+      included_activities.size.should == 0
     end
     
     
@@ -110,9 +118,11 @@ describe Policy do
       ra1 = Restrict.new
       p = Policy.new do
         permit ra1
-      end    
-      #p.included_activities.size.should == 1
-      #p.included_activities[0].should == ra1
+      end
+      ctx = p.context
+      included_activities = ctx[:included_activities] 
+      included_activities.size.should == 1
+      included_activities[0].should == ra1
     end
     
     it 'should handle many permissions' do
@@ -120,12 +130,14 @@ describe Policy do
       ra1 = Restrict.new
       p = Policy.new do
         permit ra1, ra2, ra3, ra4
-      end    
-      #p.included_activities.size.should == 4
-      #p.included_activities[0].should == ra1
-      #p.included_activities[1].should == ra2
-      #p.included_activities[2].should == ra3
-      #p.included_activities[3].should == ra4
+      end
+      ctx = p.context
+      included_activities = ctx[:included_activities] 
+      included_activities.size.should == 4
+      included_activities[0].should == ra1
+      included_activities[1].should == ra2
+      included_activities[2].should == ra3
+      included_activities[3].should == ra4
     end
     
     it 'should handle many permission statments' do
@@ -136,7 +148,9 @@ describe Policy do
         permit ra2
         permit ra3
         permit ra4
-      end    
+      end
+      ctx = p.context
+      included_activities = ctx[:included_activities] 
       #p.included_activities.size.should == 4
       #p.included_activities[0].should == ra1
       #p.included_activities[1].should == ra2
