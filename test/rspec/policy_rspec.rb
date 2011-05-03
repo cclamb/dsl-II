@@ -11,7 +11,7 @@ describe Policy do
     end
   end
 
-  context 'with obligations' do
+  context 'with default standard evaluator' do
     it 'should handle single obligations' do
       ra1 = Restrict.new
       ra2 = Restrict.new
@@ -100,9 +100,6 @@ describe Policy do
       obligations[2].obligators[0].should == ra4
       obligations[2].obligators[1].should == ra3
     end
-  end
-  
-  context 'with permit statement' do
 
     it 'should handle no permissions' do
       p = Policy.new do
