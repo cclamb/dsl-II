@@ -151,11 +151,11 @@ describe Policy do
       end
       ctx = p.context
       included_activities = ctx[:included_activities] 
-      #p.included_activities.size.should == 4
-      #p.included_activities[0].should == ra1
-      #p.included_activities[1].should == ra2
-      #p.included_activities[2].should == ra3
-      #p.included_activities[3].should == ra4
+      included_activities.size.should == 4
+      included_activities[0].should == ra1
+      included_activities[1].should == ra2
+      included_activities[2].should == ra3
+      included_activities[3].should == ra4
     end
   end
 
