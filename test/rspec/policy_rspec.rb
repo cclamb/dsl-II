@@ -36,11 +36,13 @@ describe Policy do
           with ra4
         end
       end
-      #p.obligations.size.should == 2
-      #p.obligations[0].obligatees[0].should == ra1
-      #p.obligations[0].obligators[0].should == ra2
-      #p.obligations[1].obligatees[0].should == ra3
-      #p.obligations[1].obligators[0].should == ra4
+      ctx = p.context
+      obligations = ctx[:obligations] 
+      obligations.size.should == 2
+      obligations[0].obligatees[0].should == ra1
+      obligations[0].obligators[0].should == ra2
+      obligations[1].obligatees[0].should == ra3
+      obligations[1].obligators[0].should == ra4
     end
     
     it 'should handle one-to-many obligations' do
