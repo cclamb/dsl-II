@@ -93,10 +93,10 @@ describe 'script evaluation' do
       ctx = builder.context
       policies = ctx.policies
       policies.size.should == 2
-      policies[0].included_activities.size.should == 3
-      policies[1].obligations.size.should == 1
-      policies[1].obligations[0].obligatees.size.should == 1
-      policies[1].obligations[0].obligators.size.should == 2
+      policies[0].context[:included_activities].size.should == 3
+      policies[1].context[:obligations].size.should == 1
+      policies[1].context[:obligations][0].obligatees.size.should == 1
+      policies[1].context[:obligations][0].obligators.size.should == 2
     end
 
   end
