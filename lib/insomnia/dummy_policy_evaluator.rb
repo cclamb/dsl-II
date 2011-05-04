@@ -2,7 +2,8 @@ class DummyPolicyEvaluator
 
   def initialize(&b)
     @dummy = []
-    @was_block_attached = false
+    @was_block_attached = []
+    @idx = 0
   end
   
   def method_missing(method_sym, *arguments, &block) ; end
@@ -13,7 +14,8 @@ class DummyPolicyEvaluator
   
   def dummy(*args, &b)
     @dummy = @dummy.push(args).flatten
-    @was_block_attached = block_given?
+    @was_block_attached[@idx] = block_given?
+    @idx = @idx + 1
   end
   
 end

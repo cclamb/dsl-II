@@ -109,18 +109,29 @@ describe Policy do
       ra1, ra2, ra3, ra4 = Restrict.new, Restrict.new, Restrict.new, Restrict.new
       p = Policy.new do
         policy_evaluators :standard, :dummy
+        
+        dummy :t1, :t2 do
+          true
+        end
+        
         obligate ra1 do
           with ra2
         end
+        
         obligate ra2, ra3 do
           with ra4
         end
+        
+        dummy :t3
+        
         obligate ra1, do
           with ra4, ra3
         end
-        dummy :ra1, :ra2 do
+
+        dummy :t4 do
           true
         end
+        
       end
       ctx = p.context
       obligations = ctx[:standard][:obligations] 
@@ -135,11 +146,15 @@ describe Policy do
       obligations[2].obligators[1].should == ra3
       
       dummy_args = ctx[:dummy][:dummy]
-      dummy = dummy_args.size.should == 2
-      dummy_args[0].should == :ra1
-      dummy_args[1].should == :ra2
+      dummy = dummy_args.size.should == 4
+      dummy_args[0].should == :t1
+      dummy_args[1].should == :t2
+      dummy_args[2].should == :t3
+      dummy_args[3].should == :t4
       was_block_submitted = ctx[:dummy][:block]
-      was_block_submitted.should == true
+      was_block_submitted[0].should == true
+      was_block_submitted[1].should == false
+      was_block_submitted[2].should == true
     end
     
   end
