@@ -1,0 +1,62 @@
+a1 = activity(:play)    { true }
+a2 = activity(:record)  { true }
+a3 = activity(:stop)    { true }
+
+c1 = constraint { true }
+c2 = constraint { |c| true }
+c3 = constraint { |c, a| true }
+
+ra1 = restrict a1 do
+  with c1
+end
+
+ra2 = restrict a2 do
+  with c2, c3
+end
+
+ra3 = restrict a3 do
+  with c1, c3
+end
+
+ra4 = restrict a1, a3 do
+  with c1, c2, c3
+end
+
+ra5 = restrict a3 do
+  with c1, c3
+end
+
+ra6 = restrict a1, a3 do
+  with c1, c2, c3
+end
+
+p_1 = policy do
+	permit ra1, ra3, ra5
+end
+
+p_2 = policy do
+	permit ra1
+	obligate ra1 do
+	  with ra2, ra3
+	end
+end
+
+p_3 = policy do
+  policy_evaluators :dummy
+  dummy :t1
+  dummy :t2, :t3 do
+    true
+  end
+end
+
+p_4 = policy do
+  policy_evaluators :standard, :dummy
+  dummy :t1
+  permit ra1
+  dummy :t2, :t3 do
+    true
+  end
+	obligate ra1 do
+	  with ra2, ra3
+	end
+end

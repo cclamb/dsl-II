@@ -100,6 +100,35 @@ describe 'script evaluation' do
     end
 
   end
+  
+  context 'with multiple policy evaluators' do
+    it 'should support parallel evaluation' do
+      builder = PolicyBuilder.new do
+        instance_eval(File.read('policies/simple-multiple-eval.pol'))
+      end
+      ctx = builder.context
+      policies = ctx.policies
+      policies.size.should == 4
+      policies[0].context[:included_activities].size.should == 3
+      policies[1].context[:obligations].size.should == 1
+      policies[1].context[:obligations][0].obligatees.size.should == 1
+      policies[1].context[:obligations][0].obligators.size.should == 2
+      policies[2].context[:dummy].size.should == 3
+      policies[2].context[:dummy][0] = :t1
+      policies[2].context[:dummy][1] = :t2
+      policies[2].context[:dummy][2] = :t3
+      
+      std_ctx = policies[3].context[:standard]
+      dumb_ctx = policies[3].context[:dummy]
+      std_ctx[:obligations].size.should == 1
+      std_ctx[:obligations][0].obligatees.size.should == 1
+      std_ctx[:obligations][0].obligators.size.should == 2
+      dumb_ctx[:dummy].size.should == 3
+      dumb_ctx[:dummy][0] = :t1
+      dumb_ctx[:dummy][1] = :t2
+      dumb_ctx[:dummy][2] = :t3
+    end
+  end
 
 end
 
