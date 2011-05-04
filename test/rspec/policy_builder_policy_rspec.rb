@@ -16,7 +16,5 @@ describe PolicyBuilder do
       p.should_not == nil
     end
   end
- 
-  it 'should handle policies with one obligation'
-  it 'should handle policies with many obligations'
+
 end
