@@ -4,20 +4,39 @@ require_relative 'policy_evaluator_factory'
 class Policy
 
   def initialize(&b)
-    @evaluator = nil
+    @evaluators = {}
     instance_exec(&b) if block_given?
-    @evaluator = PolicyEvaluatorFactory.new.create(:standard) if @evaluator == nil
-    @evaluator.instance_exec(&b) if block_given?
+    if @evaluators.empty?
+      @evaluators[:standard] = PolicyEvaluatorFactory.new.create(:standard)
+    end
+    @evaluators.each_value { |e| e.instance_exec(&b) } if block_given?
   end
   
-  def policy_evaluators(args)
-    @evaluator = PolicyEvaluatorFactory.new.create(args)
-  end
-  
-  def method_missing(method_sym, *arguments, &block) ; end
+    def method_missing(method_sym, *arguments, &block) ; end
   
   def context
-    return @evaluator.context
+    @evaluators.length > 1 ? process_mult_ctx : process_single_ctx
   end
+  
+  def policy_evaluators(*args)
+    factory = PolicyEvaluatorFactory.new unless args.empty? || args == nil
+    args.each do |tag|
+      @evaluators[tag] = factory.create(tag) unless tag == nil
+    end unless args == nil
+  end
+  
+  private
+  
+    def process_single_ctx
+      return @evaluators[@evaluators.keys[0]].context
+    end
+    
+    def process_mult_ctx
+      h = {}
+      @evaluators.each do |k, v|
+        h[k] = v.context
+      end
+      h
+    end
 
 end

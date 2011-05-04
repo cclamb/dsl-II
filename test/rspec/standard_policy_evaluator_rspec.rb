@@ -15,7 +15,8 @@ describe StandardPolicyEvaluator do
     it 'should handle single obligations' do
       ra1 = Restrict.new
       ra2 = Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new
+      p.instance_exec do
         obligate ra1
       end
       ctx = p.context
@@ -28,7 +29,8 @@ describe StandardPolicyEvaluator do
       ra2 = Restrict.new
       ra3 = Restrict.new
       ra4 = Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         obligate ra1 do
           with ra2
         end
@@ -47,7 +49,8 @@ describe StandardPolicyEvaluator do
     
     it 'should handle one-to-many obligations' do
       ra1, ra2, ra3 = Restrict.new, Restrict.new, Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         obligate ra1 do
           with ra2, ra3
         end
@@ -62,7 +65,8 @@ describe StandardPolicyEvaluator do
     
     it 'should handle many-to-one obligations' do
       ra1, ra2, ra3 = Restrict.new, Restrict.new, Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         obligate ra1, ra2 do
           with ra3
         end
@@ -77,7 +81,8 @@ describe StandardPolicyEvaluator do
     
     it 'should handle many-to-many obligations' do
       ra1, ra2, ra3, ra4 = Restrict.new, Restrict.new, Restrict.new, Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         obligate ra1 do
           with ra2
         end
@@ -102,7 +107,8 @@ describe StandardPolicyEvaluator do
     end
 
     it 'should handle no permissions' do
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         permit
       end
       ctx = p.context
@@ -113,7 +119,8 @@ describe StandardPolicyEvaluator do
     
     it 'should handle onen permission' do
       ra1 = Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         permit ra1
       end
       ctx = p.context
@@ -125,7 +132,8 @@ describe StandardPolicyEvaluator do
     it 'should handle many permissions' do
       ra1, ra2, ra3, ra4 = Restrict.new, Restrict.new, Restrict.new, Restrict.new
       ra1 = Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         permit ra1, ra2, ra3, ra4
       end
       ctx = p.context
@@ -140,7 +148,8 @@ describe StandardPolicyEvaluator do
     it 'should handle many permission statments' do
       ra1, ra2, ra3, ra4 = Restrict.new, Restrict.new, Restrict.new, Restrict.new
       ra1 = Restrict.new
-      p = StandardPolicyEvaluator.new do
+      p = StandardPolicyEvaluator.new 
+      p.instance_exec do
         permit ra1 
         permit ra2
         permit ra3
@@ -155,4 +164,5 @@ describe StandardPolicyEvaluator do
       included_activities[3].should == ra4
     end
   end
+  
 end

@@ -3,8 +3,9 @@ class StandardPolicyEvaluator
   def initialize(&b)
     @obligations = []
     @included_activities = []
-    instance_exec(&b) if block_given?
   end
+  
+  def method_missing(method_sym, *arguments, &block) ; end
   
   def obligate(*args, &b)
     obligation = Obligation.new(*args, &b)
@@ -20,7 +21,5 @@ class StandardPolicyEvaluator
     { :obligations => @obligations,
       :included_activities => @included_activities }
   end
-  
-  def method_missing(method_sym, *arguments, &block) ; end
   
 end

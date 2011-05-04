@@ -14,4 +14,11 @@ describe PolicyEvaluatorFactory do
     end
   end
   
+  context 'with a dummy tag' do
+    it 'should create a dummy evaluator' do
+      evaluator = @factory.create(:dummy)
+      fail 'bad evaluator' unless evaluator.kind_of? DummyPolicyEvaluator
+    end
+  end
+  
 end
