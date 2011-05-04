@@ -21,4 +21,6 @@ class StandardPolicyEvaluator
       :included_activities => @included_activities }
   end
   
+  def method_missing(method_sym, *arguments, &block) ; end
+  
 end
